@@ -18,6 +18,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 
 export default class App extends Component {
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     margin: 10,
+    paddingBottom: Platform.OS === 'android' ? 50 : 0
   },
   messageContainer: {
     flex: 4,
