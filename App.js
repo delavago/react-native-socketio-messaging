@@ -31,6 +31,7 @@ export default class App extends Component {
       message: null,
     };
 
+    //change the ip to the ip address of your computer
     this.socket = SocketIOClient('http://192.168.100.70:3001');
     this.socket.on('welcome', data => {
       this.setState({messages: [...this.state.messages, data]});
@@ -46,9 +47,7 @@ export default class App extends Component {
       groupNumber: this.state.groupNumber,
       message: this.state.message,
     };
-
     this.setState({messages: [...this.state.messages, data]});
-
     this.socket.emit('message', data);
   };
 
