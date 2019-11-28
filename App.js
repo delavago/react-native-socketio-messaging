@@ -10,26 +10,34 @@ import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
   TextInput,
   KeyboardAvoidingView,
   FlatList,
   TouchableOpacity,
-  Platform
+  Platform,
 } from 'react-native';
+
+import SocketIOClient from 'socket.io-client';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [{sender: 'Delano', groupNumber: 1, message: 'This is a test'}],
+      messages: [],
       sender: null,
       groupNumber: 0,
       message: null,
     };
+
+    this.socket = SocketIOClient('http://192.168.100.65:3001');
+    this.socket.on('welcome', data => {
+      this.setState({messages: [...this.state.messages, data]});
+    });
+    this.socket.on('message', data => {
+      this.setState({messages: [...this.state.messages, data]});
+    });
   }
 
   submitMessage = () => {
@@ -40,6 +48,8 @@ export default class App extends Component {
     };
 
     this.setState({messages: [...this.state.messages, data]});
+
+    this.socket.emit('message', data);
   };
 
   render() {
@@ -101,7 +111,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     margin: 10,
-    paddingBottom: Platform.OS === 'android' ? 50 : 0
+    paddingBottom: Platform.OS === 'android' ? 50 : 0,
   },
   messageContainer: {
     flex: 4,
