@@ -31,7 +31,7 @@ export default class App extends Component {
       message: null,
     };
 
-    this.socket = SocketIOClient('http://192.168.100.65:3001');
+    this.socket = SocketIOClient('http://192.168.100.70:3001');
     this.socket.on('welcome', data => {
       this.setState({messages: [...this.state.messages, data]});
     });
