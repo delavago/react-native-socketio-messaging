@@ -32,7 +32,7 @@ export default class App extends Component {
     };
 
     //change the ip to the ip address of your computer
-    this.socket = SocketIOClient('http://192.168.100.70:3001');
+    this.socket = SocketIOClient('http://192.168.100.67:3001/chat');
     this.socket.on('welcome', data => {
       this.setState({messages: [...this.state.messages, data]});
     });
